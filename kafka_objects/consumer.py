@@ -11,9 +11,9 @@ class Consumer():
             client_id="demo-client-1",
             group_id="demo-group",
             security_protocol="SSL",
-            ssl_cafile="ssl/ca.pem",
-            ssl_certfile="ssl/service.cert",
-            ssl_keyfile="ssl/service.key",
+            ssl_cafile=os.getenv("HOME") + "aiven-ssl/ca.pem",
+            ssl_certfile=os.getenv("HOME") + "aiven-ssl/service.cert",
+            ssl_keyfile=os.getenv("HOME") + "aiven-ssl/service.key",
         )
 
         # Instantiate db and create table if necessary
