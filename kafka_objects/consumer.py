@@ -7,7 +7,7 @@ class Consumer():
     Kafka Consumer based on "Getting Started with Aiven for Apache Kafka"
     https://help.aiven.io/en/articles/489572-getting-started-with-aiven-for-apache-kafka
     '''
-    
+
     def __init__(self, topic, host, port, **kwargs):
         self.consumer = KafkaConsumer(
             topic,
@@ -23,19 +23,18 @@ class Consumer():
 
         # Instantiate db and create table if necessary
         self.db_configured = False
-        if "db" in kwargs:
+        db_config = kwargs["db"]
+        try:
+            uri = "postgres://{user}:{pwd}@{host}:{port}/{db_name}?sslmode=require" \
+                  .format(user=db_config["user"], pwd=db_config["password"], \
+                          host=db_config["host"], port=db_config["port"], \
+                          db_name=db_config["db_name"])
+            self.account = db.AccountsController(uri)
+            self.account.create_table()
+            self.db_configured = True
             print("Consumer configured with postgresql")
-            db_config = kwargs["db"]
-            try:
-                uri = "postgres://{user}:{pwd}@{host}:{port}/{db_name}?sslmode=require" \
-                      .format(user=db_config["user"], pwd=db_config["password"], \
-                              host=db_config["host"], port=db_config["port"], \
-                              db_name=db_config["db_name"])
-                self.account = db.AccountsController(uri)
-                self.account.create_table()
-                self.db_configured = True
-            except KeyError as e:
-                print("Failed to initialize db. Invalid db credential key: ", e)
+        except KeyError as e:
+            print("Failed to initialize db. Invalid db credential key: ", e)
 
     def consume_account_data(self):
         for _ in range(2):
