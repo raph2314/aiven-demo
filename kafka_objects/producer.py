@@ -5,6 +5,7 @@ import json
 
 class Producer():
     def __init__(self, topic, host, port):
+        self.topic = topic
         self.fake = Faker()
         self.producer = KafkaProducer(
             bootstrap_servers="{}:{}".format(host, port),
@@ -13,8 +14,6 @@ class Producer():
             ssl_certfile=os.getenv("HOME") + "aiven-ssl/service.cert",
             ssl_keyfile=os.getenv("HOME") + "aiven-ssl/service.key",
         )
-
-        self.topic = topic
 
     def produce_account_data(self, iter):
         account_data = {
@@ -25,7 +24,7 @@ class Producer():
             "account_type": "chequings" if random.uniform(0,1) > 0.5 else "savings",
         }
 
-        print("Sending {}: {}".format(iter, account_data))
+        print("Produced item {}: {}".format(iter, account_data))
         self.producer.send(self.topic, json.dumps(account_data).encode("utf-8"))
 
     def close_session(self):

@@ -3,6 +3,11 @@ from kafka import KafkaConsumer
 import json
 
 class Consumer():
+    '''
+    Kafka Consumer based on "Getting Started with Aiven for Apache Kafka"
+    https://help.aiven.io/en/articles/489572-getting-started-with-aiven-for-apache-kafka
+    '''
+    
     def __init__(self, topic, host, port, **kwargs):
         self.consumer = KafkaConsumer(
             topic,
@@ -26,7 +31,6 @@ class Consumer():
                       .format(user=db_config["user"], pwd=db_config["password"], \
                               host=db_config["host"], port=db_config["port"], \
                               db_name=db_config["db_name"])
-
                 self.account = db.AccountsController(uri)
                 self.account.create_table()
                 self.db_configured = True
@@ -39,6 +43,8 @@ class Consumer():
             for tp, msgs in raw_msgs.items():
                 for msg in msgs:
                     account = json.loads(msg.value.decode("utf-8").replace("\'", "\""))
+
+                    # Only store if db is configured
                     if self.db_configured:
                         self.account.add_account(account)
 
