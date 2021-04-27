@@ -1,6 +1,8 @@
 from postgresql import db
 from kafka import KafkaConsumer
+from psycopg2 import DatabaseError
 import json
+import os
 
 class Consumer():
     '''
@@ -16,9 +18,9 @@ class Consumer():
             client_id="demo-client-1",
             group_id="demo-group",
             security_protocol="SSL",
-            ssl_cafile=os.getenv("HOME") + "aiven-ssl/ca.pem",
-            ssl_certfile=os.getenv("HOME") + "aiven-ssl/service.cert",
-            ssl_keyfile=os.getenv("HOME") + "aiven-ssl/service.key",
+            ssl_cafile=os.getenv("HOME") + "/aiven-ssl/ca.pem",
+            ssl_certfile=os.getenv("HOME") + "/aiven-ssl/service.cert",
+            ssl_keyfile=os.getenv("HOME") + "/aiven-ssl/service.key",
         )
 
         # Instantiate db and create table if necessary
@@ -33,8 +35,11 @@ class Consumer():
             self.account.create_table()
             self.db_configured = True
             print("Consumer configured with postgresql")
-        except KeyError as e:
-            print("Failed to initialize db. Invalid db credential key: ", e)
+
+        except KeyError as key_err:
+            print("Failed to initialize db. Invalid db credential key: ", key_err)
+        except DatabaseError as db_err:
+            print("Unable to initialize db:\n", db_err)
 
     def consume_account_data(self):
         for _ in range(2):

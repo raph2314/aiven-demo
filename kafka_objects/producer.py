@@ -2,6 +2,7 @@ from kafka import KafkaProducer
 from faker import Faker
 import random
 import json
+import os
 
 class Producer():
     def __init__(self, topic, host, port):
@@ -10,9 +11,9 @@ class Producer():
         self.producer = KafkaProducer(
             bootstrap_servers="{}:{}".format(host, port),
             security_protocol="SSL",
-            ssl_cafile=os.getenv("HOME") + "aiven-ssl/ca.pem",
-            ssl_certfile=os.getenv("HOME") + "aiven-ssl/service.cert",
-            ssl_keyfile=os.getenv("HOME") + "aiven-ssl/service.key",
+            ssl_cafile=os.getenv("HOME") + "/aiven-ssl/ca.pem",
+            ssl_certfile=os.getenv("HOME") + "/aiven-ssl/service.cert",
+            ssl_keyfile=os.getenv("HOME") + "/aiven-ssl/service.key",
         )
 
     def produce_account_data(self, iter):

@@ -11,7 +11,7 @@ project.
 - KAFKA_HOST
 - KAFKA_PORT
 
-4. Download the Access Key, Access Certificate, and CA Certificate from the "Overview" tab in the Aiven Kafka Service. They **must** be placed in the `$HOME/aiven-ssl` directory, and **must** use the following naming convention:
+4. Download the Access Key, Access Certificate, and CA Certificate from the "Overview" tab in the Aiven Kafka Service. They **must** be placed in the `$HOME/aiven-ssl/` directory, and **must** use the following naming convention:
 - CA Certificate: `ca.pem`
 - Access Certificate: `service.cert`
 - Access Key: `service.key`
@@ -22,8 +22,6 @@ project.
 - PG_HOST
 - PG_PORT
 - PG_DB_NAME
-
-
 
 ## Running Tests
 Add info about how to run the test suite
