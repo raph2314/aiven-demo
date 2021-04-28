@@ -8,8 +8,8 @@ The following are the requirements to be able to run this simulation:
 2. Install the required python packages by running `pip install -r requirements.txt` in the root directory of this
 project.
 3. Set the following environment variables for your Kafka services. These can all be found in the "Overview" tab in the Aiven Kafka Service.
-- KAFKA_HOST
-- KAFKA_PORT
+- `export KAFKA_HOST="<your_kafka_hostname>"`
+- `export KAFKA_PORT="<your_kafka_port>"`
 
 4. Download the Access Key, Access Certificate, and CA Certificate from the "Overview" tab in the Aiven Kafka Service. They **must** be placed in the `$HOME/aiven-ssl/` directory, and **must** use the following naming convention:
 - CA Certificate: `ca.pem`
@@ -17,11 +17,11 @@ project.
 - Access Key: `service.key`
 
 5. (Optional) Set the following environment variables if the optional PostgreSQL connection is desired. These can all be found in the "Overview" tab in the Aiven PostgreSQL Service.
-- PG_USER
-- PG_PASSWORD
-- PG_HOST
-- PG_PORT
-- PG_DB_NAME
+- `export PG_USER="<your_postresql_username>"`
+- `export PG_PASSWORD="<your_postresql_password>"`
+- `export PG_HOST="<your_postresql_hostname>"`
+- `export PG_PORT="<your_postresql_port>"`
+- `export PG_DB_NAME="<your_postresql_db_name>"`
 
 ## Running Tests
 Add info about how to run the test suite
