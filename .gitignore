@@ -1,5 +1,3 @@
+# Package binaries
 __pycache__
-ssl/ca.pem
-ssl/service.cert
-ssl/service.key
 
