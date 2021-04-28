@@ -34,5 +34,5 @@ The current test cases are integration tests that verify the producer->consumer-
 A demo application can be found in `demo_app.py` to see the basic behaviour. This can be used as a starting point for adding more functionality and tests.
 
 Some key next steps for this project are:
-2. Expand the db's interface to run more complex queries (e.g. remove accounts, transfer funds, etc...)
-3. More advanced message parsing on the consumer side to make use of the queries developed in (2.)
+1. Expand the db's interface to run more complex queries (e.g. remove accounts, transfer funds, etc...)
+2. More advanced message parsing on the consumer side to make use of the queries developed in (1.)
