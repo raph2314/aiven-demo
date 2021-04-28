@@ -24,4 +24,15 @@ project.
 - `export PG_DB_NAME="<your_postresql_db_name>"`
 
 ## Running Tests
-Add info about how to run the test suite
+The tests can be found in `test.py`. The unittest framework is used to run the tests with the following command in the root directory of this project:
+
+`python -m unittest test`
+
+The current test cases are integration tests that verify the producer->consumer->db pipeline.
+
+## Contributing
+A demo application can be found in `demo_app.py` to see the basic behaviour. This can be used as a starting point for adding more functionality and tests.
+
+Some key next steps for this project are:
+2. Expand the db's interface to run more complex queries (e.g. remove accounts, transfer funds, etc...)
+3. More advanced message parsing on the consumer side to make use of the queries developed in (2.)
