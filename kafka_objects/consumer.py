@@ -1,6 +1,6 @@
 from postgresql import db
 from kafka import KafkaConsumer
-from psycopg2 import DatabaseError
+import psycopg2
 import json
 import os
 
@@ -34,12 +34,17 @@ class Consumer():
             self.account = db.AccountsController(uri)
             self.account.create_table()
             self.db_configured = True
-            print("Consumer configured with postgresql")
 
         except KeyError as key_err:
             print("Failed to initialize db. Invalid db credential key: ", key_err)
-        except DatabaseError as db_err:
+        except psycopg2.DatabaseError as db_err:
             print("Unable to initialize db:\n", db_err)
+
+    def get_account_controller(self):
+        if self.db_configured:
+            return self.account
+        else:
+            return None
 
     def consume_account_data(self):
         for _ in range(2):
@@ -47,9 +52,11 @@ class Consumer():
             for tp, msgs in raw_msgs.items():
                 for msg in msgs:
                     account = json.loads(msg.value.decode("utf-8").replace("\'", "\""))
+                    print("KAFKA CONSUMER: account consumed for", account["first"])
 
                     # Only store if db is configured
                     if self.db_configured:
                         self.account.add_account(account)
+                        print("KAFKA CONSUMER: account stored for", account["first"])
 
         self.consumer.commit()

@@ -1,8 +1,7 @@
-from kafka_objects.producer import Producer
-from kafka_objects.consumer import Consumer
-import random
 import time
 import os
+from kafka_objects.producer import Producer
+from kafka_objects.consumer import Consumer
 
 if __name__ == "__main__":
     db_config = {
@@ -13,11 +12,14 @@ if __name__ == "__main__":
         "db_name": os.getenv("PG_DB_NAME"),
     }
 
-    producer = Producer(topic="demo-topic", host=os.getenv("KAFKA_HOST"), \
-                        port=os.getenv("KAFKA_PORT"))
-    consumer = Consumer(topic="demo-topic", host=os.getenv("KAFKA_HOST"), \
-                        port=os.getenv("KAFKA_PORT"), db=db_config)
+    # Initialize kafka objects
+    kafka_host = os.getenv("KAFKA_HOST")
+    kafka_port = os.getenv("KAFKA_PORT")
+    producer = Producer(topic="demo-topic", host=kafka_host, port=kafka_port)
+    consumer = Consumer(topic="demo-topic", host=kafka_host, port=kafka_port, \
+                        db=db_config)
 
+    # Simulate account data transfer
     for i in range(10):
         producer.produce_account_data(i)
         time.sleep(1)
