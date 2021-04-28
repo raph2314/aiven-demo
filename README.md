@@ -11,7 +11,7 @@ project.
 - `export KAFKA_HOST="<your_kafka_hostname>"`
 - `export KAFKA_PORT="<your_kafka_port>"`
 
-4. Download the Access Key, Access Certificate, and CA Certificate from the "Overview" tab in the Aiven Kafka Service. They **must** be placed in the `$HOME/aiven-ssl/` directory, and **must** use the following naming convention:
+4. Download the Access Key, Access Certificate, and CA Certificate from the "Overview" tab in the Aiven Kafka Service. They **must** be placed in your `$HOME/aiven-ssl/` directory on your machine, and **must** use the following naming convention:
 - CA Certificate: `ca.pem`
 - Access Certificate: `service.cert`
 - Access Key: `service.key`
